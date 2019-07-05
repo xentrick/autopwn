@@ -1,3 +1,0 @@
-[submodule "metasploitable3"]
-	path = metasploitable3
-	url = git@github.com:rapid7/metasploitable3.git
