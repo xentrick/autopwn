@@ -11,6 +11,10 @@ class IIS(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
+        self.name = "IIS HTTP/FTP"
+
         self.protocols = [
             "FTP",
             "HTTP"

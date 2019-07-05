@@ -10,6 +10,8 @@ class Tomcat(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "Apache Tomcat 8"
 
         self.protocols = [

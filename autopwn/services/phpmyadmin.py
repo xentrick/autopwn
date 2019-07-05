@@ -10,6 +10,8 @@ class PHPMyAdmin(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "PHPMyAdmin"
 
         self.protocols = [

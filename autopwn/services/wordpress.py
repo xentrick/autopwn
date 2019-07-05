@@ -10,6 +10,8 @@ class WordPress(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "WordPress"
 
         self.protocols = [

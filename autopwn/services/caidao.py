@@ -11,6 +11,8 @@ class Caidao(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "Chinese Caidao"
 
         self.protocols = [

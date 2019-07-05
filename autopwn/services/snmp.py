@@ -10,6 +10,8 @@ class SNMP(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "SNMP"
 
         self.protocols = [

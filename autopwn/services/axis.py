@@ -10,6 +10,8 @@ class Axis(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "Apache Axis2"
 
         self.protocols = [

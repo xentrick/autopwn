@@ -10,6 +10,8 @@ class Struts(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "Apache Struts"
 
         self.protocols = [

@@ -10,6 +10,8 @@ class MySQL(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "MySQL"
 
         self.protocols = [

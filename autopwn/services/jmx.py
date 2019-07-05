@@ -10,6 +10,8 @@ class JMX(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "Java JMX Server"
 
         self.protocols = [

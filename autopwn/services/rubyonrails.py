@@ -10,6 +10,8 @@ class RubyonRails(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "Ruby on Rails"
 
         self.protocols = [

@@ -11,6 +11,8 @@ class PSExec(Service):
 
     def __init__(self):
 
+        super().__init__(self)
+
         self.name = "psexec"
 
         self.protocols = [
