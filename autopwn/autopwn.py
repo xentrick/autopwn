@@ -22,8 +22,7 @@ class Autopwn(object):
             if not util.valid_ipv6(host):
                 log.info("Invalid address.")
                 return -1
-        else:
-            log.info("Valid host address!")
+        log.info("Valid host address!")
 
         return 0
 
