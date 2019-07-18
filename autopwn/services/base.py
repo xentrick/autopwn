@@ -3,11 +3,11 @@
 import socket
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
 class Service(object):
-
     def __init__(self):
 
         self.name = "Base Service Class"
@@ -33,7 +33,6 @@ class Service(object):
                 except:
                     raise Exception(
                         "{ip}: {name} is down on port {port}".format(
-                            ip=ip,
-                            name=self.name,
-                            port=p
-                        ))
+                            ip=ip, name=self.name, port=p
+                        )
+                    )

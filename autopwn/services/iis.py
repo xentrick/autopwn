@@ -4,38 +4,28 @@ from .base import Service
 from ..const import creds
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
 class IIS(Service):
-
     def __init__(self):
 
         super().__init__(self)
 
         self.name = "IIS HTTP/FTP"
 
-        self.protocols = [
-            "FTP",
-            "HTTP"
-        ]
+        self.protocols = ["FTP", "HTTP"]
 
-        self.ports = [
-            21,
-            80
-        ]
+        self.ports = [21, 80]
 
         self.exploits = [
             "auxiliary/scanner/ftp/ftp_login",
-            "auxiliary/dos/http/ms15_034_ulonglongadd"
+            "auxiliary/dos/http/ms15_034_ulonglongadd",
         ]
 
-        self.creds = {
-            "vagrant": "vagrant"
-        }
+        self.creds = {"vagrant": "vagrant"}
         # Uses Windows creds as well. Pull in constant values
         self.creds.append(creds)
 
-        self.cves = [
-            "CVE-2015-1635"
-        ]
+        self.cves = ["CVE-2015-1635"]

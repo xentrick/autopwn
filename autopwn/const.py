@@ -20,6 +20,5 @@ creds = {
     "jabba_hutt": "not-a-slug12",
     "greedo": "hanShotFirst!",
     "chewbacca": "rwaaaaawr5",
-    "kylo_ren": "daddy_issues1"
+    "kylo_ren": "daddy_issues1",
 }
-

@@ -3,21 +3,17 @@
 from .base import Service
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
 class ServiceName(Service):
-
     def __init__(self):
 
-        self.protocols = [
-        ]
+        self.protocols = []
 
-        self.ports = [
-        ]
+        self.ports = []
 
-        self.exploits = [
-        ]
+        self.exploits = []
 
-        self.creds = {
-        }
+        self.creds = {}
