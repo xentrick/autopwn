@@ -11,16 +11,11 @@ log = logging.getLogger(__name__)
 class SSH(Service):
     def __init__(self):
 
-        super().__init__(self)
-
         self.name = "SSH"
-
         self.protocols = ["SSH"]
-
         self.ports = [22]
-
         self.exploits = [
             # Fix it
         ]
-
         self.creds = creds
+        super(SSH).__init__()

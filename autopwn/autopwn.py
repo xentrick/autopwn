@@ -4,18 +4,36 @@ from . import services
 from . import util
 
 import logging
-<<<<<<< HEAD
 
 log = logging.getLogger(__name__)
-=======
 log = logging.getLogger("autopwn")
->>>>>>> d537f072b49c577d17e2f458ecdbf666d7a28a11
 
 
 class Autopwn(object):
     def __init__(self):
         log.info("Starting Autopwn!")
-        return
+
+        # Modules
+        self.axis = services.Axis()
+        self.caidao = services.Caidao()
+        self.elastic = services.Elastic()
+        self.glassfish = services.GlassFish()
+        self.iis = services.IIS()
+        self.jenkins = services.Jenkins()
+        self.jmx = services.JMX()
+        self.mengine = services.ManageEngine()
+        self.mysql = services.MySQL()
+        self.phpmyadmin = services.PHPMyAdmin()
+        self.psexec = services.PSExec()
+        self.rdp = services.RDP()
+        self.rubyonrails = services.RubyonRails()
+        self.snmp = services.SNMP()
+        self.ssh = services.SSH()
+        self.struts = services.Struts()
+        self.tomcat = services.Tomcat()
+        self.webdav = services.WebDAV()
+        self.winrm = services.WinRM()
+        self.wordpress = services.WordPress()
 
     def scoreHost(self, host):
         log.info("Checking {}".format(host))

@@ -1,5 +1,15 @@
 # autopwn
 
+# msrpcd
+
+Start up:
+
+`./init/init_msfrpcd.sh`  
+
+Credentials:  
+
+User: `talosvillage`  
+Password: `T4L05PWN5U`
 
 ## Ports
 

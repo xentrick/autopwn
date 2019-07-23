@@ -10,16 +10,13 @@ log = logging.getLogger(__name__)
 class MySQL(Service):
     def __init__(self):
 
-        super().__init__(self)
-
         self.name = "MySQL"
-
         self.protocols = ["TCP"]
-
         self.ports = [3306]
-
-        self.exploits = ["windows/mysql/mysql_payload"]
-
+        self.exploits = [
+            # This payload doesn't exist like metasploitable suggests.
+            # "windows/mysql/mysql_payload"
+        ]
         self.creds = {"root": ""}
-
         self.cves = []
+        super().__init__()

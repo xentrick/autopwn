@@ -11,18 +11,12 @@ log = logging.getLogger(__name__)
 class RDP(Service):
     def __init__(self):
 
-        super().__init__(self)
-
         self.name = "Remote Desktop Protocol"
-
         self.protocols = ["RDP"]
-
         self.ports = [3389]
-
         self.exploits = [
             # FIX IT
         ]
-
         self.creds = creds
-
         self.cves = []
+        super(RDP).__init__()
