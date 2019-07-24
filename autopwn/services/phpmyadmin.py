@@ -16,4 +16,4 @@ class PHPMyAdmin(Service):
         self.exploits = ["multi/http/phpmyadmin_preg_replace"]
         self.creds = {"root": ""}
         self.cves = ["CVE-2013-3238"]
-        super(PHPMyAdmin).__init__()
+        super().__init__()

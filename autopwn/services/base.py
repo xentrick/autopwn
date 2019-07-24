@@ -45,3 +45,23 @@ class Service(object):
                             ip=ip, name=self.name, port=p
                         )
                     )
+
+    @property
+    def auxiliary(self):
+        return self._msfrpcd.modules.auxiliary
+
+    @property
+    def encoders(self):
+        self._msfrpcd.modules.encoders
+
+    @property
+    def nops(self):
+        self._msfrpcd.modules.nops
+
+    @property
+    def payloads(self):
+        self._msfrpcd.modules.payloads
+
+    @property
+    def post(self):
+        self._msfrpcd.modules.post
