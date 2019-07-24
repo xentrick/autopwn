@@ -41,7 +41,7 @@ class Service(object):
         return
 
     def status(self, ip):
-        # TCP
+        """ Some sort of base for checking service status """
         if "TCP" in self.protocols:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             for p in self.ports:
