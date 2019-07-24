@@ -4,9 +4,7 @@ from . import services
 from . import util
 
 import logging
-
 log = logging.getLogger(__name__)
-log = logging.getLogger("autopwn")
 
 
 class Autopwn(object):
@@ -36,7 +34,11 @@ class Autopwn(object):
         self.wordpress = services.WordPress()
 
     def scoreHost(self, host):
+        log.debug("Verifying host IP")
         util.ip.checkIP(host)
+        log.info("Scoring {}".format(host))
+        self.mysql.exploitall(host)
+
 
     def checkAll(self):
         log.info("Powering up the lasers. Preparing for world domination!")

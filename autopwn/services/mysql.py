@@ -14,8 +14,7 @@ class MySQL(Service):
         self.protocols = ["TCP"]
         self.ports = [3306]
         self.exploits = [
-            # This payload doesn't exist like metasploitable suggests.
-            # "windows/mysql/mysql_payload"
+            "exploit/multi/mysql/mysql_udf_payload"
         ]
         self.creds = {"root": ""}
         self.cves = []

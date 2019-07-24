@@ -67,15 +67,6 @@ class Service(object):
         """ Kill a session """
         return
 
-    """ Helpers """
-
-    def search(self, keyword=None):
-        if keyword:
-            if not isinstance(keyword, str):
-                return TypeError("Search keyword must be a string.")
-            return [s for s in self._msfrpcd.modules.exploits if keyword.lower() in s]
-        return self._msfrpcd.modules.exploits
-
     """ Properties """
 
     @property
@@ -84,17 +75,16 @@ class Service(object):
 
     @property
     def encoders(self):
-        return self._msfrpcd.modules.encoders
+        self._msfrpcd.modules.encoders
 
     @property
     def nops(self):
-        return self._msfrpcd.modules.nops
+        self._msfrpcd.modules.nops
 
     @property
     def payloads(self):
-        return self._msfrpcd.modules.payloads
+        self._msfrpcd.modules.payloads
 
     @property
     def post(self):
-        return self._msfrpcd.modules.post
-
+        self._msfrpcd.modules.post
