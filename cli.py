@@ -13,3 +13,6 @@ tar = "192.168.13.152"
 # MySQL
 pprint(pwn.mysql.msfcore())
 print(pwn.mysql.name)
+
+pwn.scoreHost(tar)
+

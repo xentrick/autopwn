@@ -25,6 +25,11 @@ class Service(object):
         return [m for m in dir(self._msfrpcd) if not m.startswith("_")]
 
     def exploit(self, module):
+        log.debug("Preparing exploit for {}".format(self.name))
+        # Split module type and path
+        mType, mPath = module.split("/", 1)
+        log.debug("Module Type: {}".format(mType))
+        log.debug("Module Path: {}".format(mPath))
         pwn = self._msfrpcd.use("exploits", module)
         log.info("{} fired!".format(pwn.name))
 
