@@ -12,8 +12,12 @@ class PHPMyAdmin(Service):
 
         self.name = "PHPMyAdmin"
         self.protocols = ["HTTP"]
-        self.ports = [8585]
-        self.exploits = ["multi/http/phpmyadmin_preg_replace"]
+        self.ports = 80 #8585
+        self.exploits = ["exploit/multi/http/phpmyadmin_preg_replace"]
         self.creds = {"root": ""}
         self.cves = ["CVE-2013-3238"]
+        self.msfopts = {
+            "RHOSTS": None,
+            "RPORT": self.ports
+        }
         super().__init__()

@@ -7,10 +7,10 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class MySQL(Service):
+class Unreal(Service):
     def __init__(self):
 
-        self.name = "MySQL"
+        self.name = "Unreal IRCd"
         self.protocols = ["TCP"]
         self.ports = [3306]
         self.exploits = [

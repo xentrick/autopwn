@@ -22,3 +22,7 @@ creds = {
     "chewbacca": "rwaaaaawr5",
     "kylo_ren": "daddy_issues1",
 }
+
+
+# MSF Options Structure
+

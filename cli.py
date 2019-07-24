@@ -6,11 +6,14 @@ from pprint import pprint
 import logging
 log = logging.getLogger("autopwn")
 log.setLevel(logging.DEBUG)
+msflog = logging.getLogger("pymetasploit3")
+msflog.setLevel(logging.DEBUG)
 
 
 pwn = Autopwn()
 
-tar = "192.168.13.152"
+#tar = "192.168.13.152"
+tar = "192.168.56.3"
 
 # MySQL
 pprint(pwn.mysql.msfcore())
