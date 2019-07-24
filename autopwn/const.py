@@ -2,6 +2,9 @@
 
 __version__ = 0.1
 
+class ssh:
+    user = 'root'
+    password = 'btv'
 
 # Usernames
 creds = {

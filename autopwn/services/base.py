@@ -3,14 +3,14 @@
 import socket
 from pymetasploit3.msfrpc import MsfRpcClient
 from pprint import pprint
-
+from autopwn.util import acid
 from ..util.msf import (
     splitmodule,
     verifyJob
 )
 
 import logging
-log = logging.getLogger(__name__)
+log = logging.getLogger('autopwn')
 
 
 class Service(object):
@@ -45,6 +45,8 @@ class Service(object):
         return pwn.execute()
 
     def exploitall(self, host):
+        log.debug(f"Performing {self.name} acid test")
+        acid.check_port(host, self.ports)
         log.debug("Sending all exploits for {}".format(self.name))
         self.victim = host
         for i in self.exploits:
@@ -52,6 +54,9 @@ class Service(object):
             if not verifyJob(result):
                 log.info("Exploit failed...")
                 pass
+
+    def acid_test(self, host):
+        raise NotImplementedError("Can't run acid_test on base class")
 
     def login(self):
         return
