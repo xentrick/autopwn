@@ -25,12 +25,12 @@ class Service(object):
         return [m for m in dir(self._msfrpcd) if not m.startswith("_")]
 
     def exploit(self, module):
-        pwn = self._msfrpcd.use("exploits", i)
+        pwn = self._msfrpcd.use("exploits", module)
         log.info("{} fired!".format(pwn.name))
 
     def exploitall(self):
         for i in self.exploits:
-            self.exploit(i):
+            self.exploit(i)
 
     def login(self):
         return
