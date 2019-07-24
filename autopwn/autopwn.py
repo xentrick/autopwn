@@ -36,6 +36,10 @@ class Autopwn(object):
     def scoreHost(self, host):
         log.debug("Verifying host IP")
         util.ip.checkIP(host)
+
+        log.debug(f"SSH Acid test {host}")
+        util.acid.ssh_test(host)
+
         log.info("Scoring {}".format(host))
         self.mysql.exploitall(host)
 

@@ -1,3 +1,10 @@
-#!/usr/bin/env python
+class AutoPwnException(Exception):
+    pass
 
-# Add exceptions
+# Acid Exceptions
+
+class AcidTestException(AutoPwnException):
+    pass
+
+class AcidSSHConfigurationException(AcidTestException):
+    pass
