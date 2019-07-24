@@ -12,7 +12,7 @@ class Elastic(Service):
 
         self.name = "Elastic Search"
         self.protocols = ["HTTP"]
-        self.ports = [9200]
+        self.ports = 9200
         self.exploits = ["exploit/multi/elasticsearch/script_mvel_rce"]
         self.creds = {}
         self.cves = ["CVE-2014-3120"]

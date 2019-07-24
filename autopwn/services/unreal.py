@@ -11,16 +11,12 @@ class Unreal(Service):
     def __init__(self):
 
         self.name = "Unreal IRCd"
-        self.protocols = ["TCP"]
-        self.ports = [3306]
+        self.protocols = "TCP"
+        self.ports = 6697
         self.exploits = [
-            "exploit/multi/mysql/mysql_udf_payload"
+            "exploit/unix/irc/unreal_ircd_3281_backdoor"
         ]
-        self.creds = ("root", "")
-        self.cves = []
-        self.msfopts = {
-            "RHOSTS": None,
-            "USERNAME": self.creds[0],
-            "FOCE_UDF_UPLOAD": True
-        }
+        self.creds = []
+        self.cves = ["CVE-2010-2075"]
+        self.msfopts = {}
         super().__init__()

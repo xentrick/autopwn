@@ -22,7 +22,7 @@ class Service(object):
             username=self._msfuser,
             ssl=True,
             server="127.0.0.1",
-            port=55553,
+            port=55553
         )
 
     def msfcore(self):
@@ -33,12 +33,7 @@ class Service(object):
         log.debug("Preparing exploit for {}".format(self.name))
         mType, mPath = splitmodule(module)
         pwn = self._msfrpcd.modules.use(mType, mPath)
-        # MSF options
-        # if "RHOST" in pwn.options:
-        #     pwn['RHOST'] = host
-        # elif "RHOSTS" in pwn.options:
-        #     pwn['RHOSTS'] = host
-        pwn['RPORT'] = self.ports[0] # Change self.port from a list to single entry
+        pwn['RPORT'] = self.ports  # Change self.port from a list to single entry
 #        pprint(pwn.options)
 #        pprint(pwn.targetpayloads())
         log.info("{} fired!".format(pwn.name))
