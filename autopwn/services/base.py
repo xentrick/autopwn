@@ -24,9 +24,13 @@ class Service(object):
         """ Return Modules in MsfRpcClient """
         return [m for m in dir(self._msfrpcd) if not m.startswith("_")]
 
-    def exploit(self):
+    def exploit(self, module):
+        pwn = self._msfrpcd.use("exploits", i)
+        log.info("{} fired!".format(pwn.name))
+
+    def exploitall(self):
         for i in self.exploits:
-            pwn = self._msfrpcd.user("exploits", i)
+            self.exploit(i):
 
     def login(self):
         return
@@ -45,6 +49,20 @@ class Service(object):
                             ip=ip, name=self.name, port=p
                         )
                     )
+
+    def shells(self):
+        """ List sessions """
+        return
+
+    def attach(self):
+        """ Attach to a session"""
+        return
+
+    def detach(self):
+        """ Kill a session """
+        return
+
+    """ Properties """
 
     @property
     def auxiliary(self):
