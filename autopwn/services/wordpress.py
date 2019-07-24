@@ -16,4 +16,4 @@ class WordPress(Service):
         self.exploits = ["unix/webapp/wp_ninja_forms_unauthenticated_file_upload"]
         self.creds = {}
         self.cves = ["CVE-2016-1209"]
-        super(WordPress).__init__()
+        super().__init__()

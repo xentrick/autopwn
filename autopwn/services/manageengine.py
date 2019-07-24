@@ -16,4 +16,4 @@ class ManageEngine(Service):
         self.exploits = ["exploit/windows/http/manageengine_connectionid_write"]
         self.creds = {"admin": "admin"}
         self.cves = ["CVE-2015-8249"]
-        super(ManageEngine).__init__()
+        super().__init__()

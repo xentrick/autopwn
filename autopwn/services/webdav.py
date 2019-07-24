@@ -16,4 +16,4 @@ class WebDAV(Service):
         self.exploits = ["auxiliary/scanner/http/http_put"]
         self.creds = {}
         self.cves = []
-        super(WebDAV).__init__()
+        super().__init__()

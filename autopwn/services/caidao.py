@@ -17,4 +17,4 @@ class Caidao(Service):
         self.exploits = ["auxiliary/scanner/http/caidao_bruteforce_login"]
         self.creds = creds
         self.cves = []
-        super(Caidao).__init__()
+        super().__init__()

@@ -23,4 +23,4 @@ class WinRM(Service):
         ]
         self.creds = creds
         self.cves = []
-        super(WinRM).__init__()
+        super().__init__()

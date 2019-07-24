@@ -16,4 +16,4 @@ class Struts(Service):
         self.exploits = ["exploit/multi/http/struts_dmi_rest_exec"]
         self.creds = {"sploit": "sploit"}
         self.cves = ["CVE-2016-3087"]
-        super(Struts).__init__()
+        super().__init__()

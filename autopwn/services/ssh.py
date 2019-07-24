@@ -18,4 +18,4 @@ class SSH(Service):
             # Fix it
         ]
         self.creds = creds
-        super(SSH).__init__()
+        super().__init__()

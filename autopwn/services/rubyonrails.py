@@ -16,4 +16,4 @@ class RubyonRails(Service):
         self.exploits = ["exploit/multi/http/rails_web_console_v2_code_exec"]
         self.creds = {}
         self.cves = ["CVE-2015-3224"]
-        super(RubyonRails).__init__()
+        super().__init__()

@@ -15,4 +15,4 @@ class SNMP(Service):
         self.ports = [161]
         self.exploits = ["auxiliary/scanner/snmp/snmp_enum"]
         self.creds = ["public"]
-        super(SNMP).__init__()
+        super().__init__()

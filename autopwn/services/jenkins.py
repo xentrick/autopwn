@@ -18,4 +18,4 @@ class Jenkins(Service):
             "auxiliary/scanner/http/jenkins_enum",
         ]
         self.creds = {}
-        super(Jenkins).__init__()
+        super().__init__()

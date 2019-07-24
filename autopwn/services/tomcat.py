@@ -21,4 +21,4 @@ class Tomcat(Service):
         ]
         self.creds = {"sploit": "sploit"}
         self.cves = ["CVE-2009-3843", "CVE-2009-4189"]
-        super(Tomcat).__init__()
+        super().__init__()

@@ -22,4 +22,4 @@ class IIS(Service):
         # Uses Windows creds as well. Pull in constant values
         self.creds.update(creds)
         self.cves = ["CVE-2015-1635"]
-        super(IIS).__init__()
+        super().__init__()

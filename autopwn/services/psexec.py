@@ -20,4 +20,4 @@ class PSExec(Service):
         ]
         self.creds = creds
         self.cves = []
-        super(PSExec).__init__()
+        super().__init__()

@@ -16,4 +16,4 @@ class JMX(Service):
         self.exploits = ["multi/misc/java_jmx_server"]
         self.creds = {}
         self.cves = ["CVE-2015-2342"]
-        super(JMX).__init__()
+        super().__init__()

@@ -18,4 +18,4 @@ class GlassFish(Service):
             "auxiliary/scanner/http/glassfish_login",
         ]
         self.cves = ["CVE-2011-0807"]
-        super(GlassFish).__init__()
+        super().__init__()

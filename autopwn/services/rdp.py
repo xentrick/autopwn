@@ -19,4 +19,4 @@ class RDP(Service):
         ]
         self.creds = creds
         self.cves = []
-        super(RDP).__init__()
+        super().__init__()

@@ -16,4 +16,4 @@ class Elastic(Service):
         self.exploits = ["exploit/multi/elasticsearch/script_mvel_rce"]
         self.creds = {}
         self.cves = ["CVE-2014-3120"]
-        super(Elastic).__init__()
+        super().__init__()
