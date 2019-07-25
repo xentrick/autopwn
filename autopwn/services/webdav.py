@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class WebDAV(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(WebDAV, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "WebDAV"
         self.protocols = ["HTTP"]
@@ -16,4 +20,3 @@ class WebDAV(Service):
         self.exploits = ["auxiliary/scanner/http/http_put"]
         self.creds = {}
         self.cves = []
-        super().__init__()

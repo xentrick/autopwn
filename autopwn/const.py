@@ -2,11 +2,13 @@
 
 __version__ = 0.1
 
+
 class ssh:
-    user = 'root'
+    user = 'btv'
     password = 'btv'
 
-# Usernames
+
+# Metasploitable Default Credentials
 creds = {
     "vagrant": "vagrant",
     "leah_organa": "help_me_obiw@n",
@@ -27,5 +29,35 @@ creds = {
 }
 
 
-# MSF Options Structure
+# msfrpcd
 
+MSFUSER = "talosvillage"
+MSFPASS = "T4L05PWN5U"
+MSFSERVER = "127.0.0.1"
+MSFPORT = 55553
+MSFSSL = True
+
+SERVICES = [
+    "axis",
+    "aidao",
+    "elastic",
+    "lassfish",
+    "iis",
+    "enkins",
+    "jmx",
+    "engine",
+    "mysql",
+    "hpmyadmin",
+    "psexec",
+    "dp",
+    "rubyonrails",
+    "nmp",
+    "ssh",
+    "truts",
+    "tomcat",
+    "unreal",
+    "nreal",
+    "webdav",
+    "inrm",
+    "wordpress"
+]

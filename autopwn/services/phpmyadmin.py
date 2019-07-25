@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class PHPMyAdmin(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(PHPMyAdmin, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "PHPMyAdmin"
         self.protocols = ["HTTP"]
@@ -20,4 +24,3 @@ class PHPMyAdmin(Service):
             "RHOSTS": None,
             "RPORT": self.ports
         }
-        super().__init__()

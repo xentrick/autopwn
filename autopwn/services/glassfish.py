@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class GlassFish(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(GlassFish, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "GlassFish"
         self.protocols = ["HTTP", "HTTPS"]
@@ -18,4 +22,3 @@ class GlassFish(Service):
             "auxiliary/scanner/http/glassfish_login",
         ]
         self.cves = ["CVE-2011-0807"]
-        super().__init__()

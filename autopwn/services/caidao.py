@@ -9,7 +9,11 @@ log = logging.getLogger(__name__)
 
 
 class Caidao(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(Caidao, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Chinese Caidao"
         self.protocols = ["HTTP"]
@@ -17,4 +21,3 @@ class Caidao(Service):
         self.exploits = ["auxiliary/scanner/http/caidao_bruteforce_login"]
         self.creds = creds
         self.cves = []
-        super().__init__()

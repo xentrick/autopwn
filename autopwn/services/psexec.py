@@ -9,7 +9,11 @@ log = logging.getLogger(__name__)
 
 
 class PSExec(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(PSExec, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "psexec"
         self.protocols = ["SMB", "NetBIOS"]
@@ -20,4 +24,3 @@ class PSExec(Service):
         ]
         self.creds = creds
         self.cves = []
-        super().__init__()

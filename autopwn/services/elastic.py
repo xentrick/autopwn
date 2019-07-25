@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class Elastic(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(Elastic, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Elastic Search"
         self.protocols = ["HTTP"]

@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class JMX(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(JMX, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Java JMX Server"
         self.protocols = ["TCP"]
@@ -20,4 +24,3 @@ class JMX(Service):
             "RHOSTS": None,
             "RPORT": self.ports
         }
-        super().__init__()

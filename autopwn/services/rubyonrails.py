@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class RubyonRails(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(RubyonRails, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Ruby on Rails"
         self.protocols = ["HTTP"]
@@ -16,4 +20,3 @@ class RubyonRails(Service):
         self.exploits = ["exploit/multi/http/rails_web_console_v2_code_exec"]
         self.creds = {}
         self.cves = ["CVE-2015-3224"]
-        super().__init__()

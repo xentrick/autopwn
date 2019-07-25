@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class MySQL(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(MySQL, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "MySQL"
         self.protocols = ["TCP"]
@@ -23,4 +27,3 @@ class MySQL(Service):
             "USERNAME": self.creds[0],
             "FOCE_UDF_UPLOAD": True
         }
-        super().__init__()

@@ -1,5 +1,15 @@
-from .axis import Axis
+# Base
+
 from .base import Service
+
+# All
+
+# Ubuntu Metasploitable
+
+from .unreal import Unreal
+
+# Windows Metasploitable
+from .axis import Axis
 from .caidao import Caidao
 from .elastic import Elastic
 from .glassfish import GlassFish
@@ -20,6 +30,3 @@ from .webdav import WebDAV
 from .winrm import WinRM
 from .wordpress import WordPress
 
-# Ubuntu Metasploitable
-
-from .unreal import Unreal

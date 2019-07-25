@@ -9,7 +9,11 @@ log = logging.getLogger(__name__)
 
 
 class RDP(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(RDP, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Remote Desktop Protocol"
         self.protocols = ["RDP"]
@@ -19,4 +23,3 @@ class RDP(Service):
         ]
         self.creds = creds
         self.cves = []
-        super().__init__()

@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class Tomcat(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(Tomcat, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Apache Tomcat 8"
         self.protocols = ["HTTP"]
@@ -21,4 +25,3 @@ class Tomcat(Service):
         ]
         self.creds = {"sploit": "sploit"}
         self.cves = ["CVE-2009-3843", "CVE-2009-4189"]
-        super().__init__()

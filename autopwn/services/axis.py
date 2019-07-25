@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class Axis(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(Axis, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Apache Axis2"
         self.protocols = ["HTTP"]
@@ -18,4 +22,3 @@ class Axis(Service):
         ]
         self.creds = {}
         self.cves = ["CVE-2010-0219"]
-        super().__init__()

@@ -9,7 +9,11 @@ log = logging.getLogger(__name__)
 
 
 class IIS(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(IIS, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "IIS HTTP/FTP"
         self.protocols = ["FTP", "HTTP"]
@@ -22,4 +26,3 @@ class IIS(Service):
         # Uses Windows creds as well. Pull in constant values
         self.creds.update(creds)
         self.cves = ["CVE-2015-1635"]
-        super().__init__()

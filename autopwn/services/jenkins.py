@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 
 
 class Jenkins(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(Jenkins, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "Jenkins"
         self.protocols = ["HTTP"]
@@ -18,4 +22,3 @@ class Jenkins(Service):
             "auxiliary/scanner/http/jenkins_enum",
         ]
         self.creds = {}
-        super().__init__()

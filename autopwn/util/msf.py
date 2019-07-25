@@ -1,7 +1,27 @@
 #!/usr/bin/env python3
 
+from ..const import (
+    MSFUSER,
+    MSFPASS,
+    MSFSERVER,
+    MSFPORT,
+    MSFSSL
+)
+
+from pymetasploit3.msfrpc import MsfRpcClient
+
 import logging
 log = logging.getLogger(__name__)
+
+
+def msfconnect():
+    return MsfRpcClient(
+        MSFPASS,
+        username=MSFUSER,
+        ssl=MSFSSL,
+        server=MSFSERVER,
+        port=MSFPORT
+    )
 
 
 def splitmodule(module):
@@ -16,6 +36,7 @@ def splitmodule(module):
         log.debug("Module Type: {}".format(mType))
         log.debug("Module Path: {}".format(mPath))
         return mType, mPath
+
 
 def verifyJob(job):
     if not isinstance(job, dict):

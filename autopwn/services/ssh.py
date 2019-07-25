@@ -9,7 +9,11 @@ log = logging.getLogger(__name__)
 
 
 class SSH(Service):
-    def __init__(self):
+    def __init__(self, autopwn):
+
+        super(SSH, self).__init__()
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
 
         self.name = "SSH"
         self.protocols = ["SSH"]
@@ -18,4 +22,3 @@ class SSH(Service):
             # Fix it
         ]
         self.creds = creds
-        super().__init__()

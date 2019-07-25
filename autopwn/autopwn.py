@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from . import services
 from . import util
@@ -11,27 +11,31 @@ class Autopwn(object):
     def __init__(self):
         log.info("Starting Autopwn!")
 
+        # msfrpcd instance
+        self._msfrpcd = util.msf.msfconnect()
+
         # Modules
-        self.axis = services.Axis()
-        self.caidao = services.Caidao()
-        self.elastic = services.Elastic()
-        self.glassfish = services.GlassFish()
-        self.iis = services.IIS()
-        self.jenkins = services.Jenkins()
-        self.jmx = services.JMX()
-        self.mengine = services.ManageEngine()
-        self.mysql = services.MySQL()
-        self.phpmyadmin = services.PHPMyAdmin()
-        self.psexec = services.PSExec()
-        self.rdp = services.RDP()
-        self.rubyonrails = services.RubyonRails()
-        self.snmp = services.SNMP()
-        self.ssh = services.SSH()
-        self.struts = services.Struts()
-        self.tomcat = services.Tomcat()
-        self.webdav = services.WebDAV()
-        self.winrm = services.WinRM()
-        self.wordpress = services.WordPress()
+        self.axis = services.Axis(self)
+        self.caidao = services.Caidao(self)
+        self.elastic = services.Elastic(self)
+        self.glassfish = services.GlassFish(self)
+        self.iis = services.IIS(self)
+        self.jenkins = services.Jenkins(self)
+        self.jmx = services.JMX(self)
+        self.mengine = services.ManageEngine(self)
+        self.mysql = services.MySQL(self)
+        self.phpmyadmin = services.PHPMyAdmin(self)
+        self.psexec = services.PSExec(self)
+        self.rdp = services.RDP(self)
+        self.rubyonrails = services.RubyonRails(self)
+        self.snmp = services.SNMP(self)
+        self.ssh = services.SSH(self)
+        self.struts = services.Struts(self)
+        self.tomcat = services.Tomcat(self)
+        self.unreal = services.Unreal(self)
+        self.webdav = services.WebDAV(self)
+        self.winrm = services.WinRM(self)
+        self.wordpress = services.WordPress(self)
 
     def scoreHost(self, host):
         log.debug("Verifying host IP")
