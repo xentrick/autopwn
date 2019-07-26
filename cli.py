@@ -22,4 +22,6 @@ pprint(pwn.mysql.search("mysql"))
 
 #pwn.scoreHost(tar)
 pwn.unreal.exploitall(tar)
+pprint(pwn.unreal.sessions())
+
 

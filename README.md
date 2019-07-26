@@ -30,6 +30,19 @@ PORT     STATE  SERVICE     REASON       VERSION
 6697/tcp open   irc         syn-ack      UnrealIRCd
 8181/tcp open   http        syn-ack      WEBrick httpd 1.3.1 (Ruby 2.3.8 (2018-10-18))
 
+# Exploits
+
+Unreal - 6697 - 2010-2075 - Figure out listener?
+ProFTPd - 80/21 - 2015-3306 - Working Exploit
+Drupal - 80 "/drupal" working exploit
+payrollapp - 80 - wrote exploit working.
+webrick -3500 - dir trav - 1.1.1.1:3500/readme?os=../../../../ working
+phpmyadmin - exploited with sql database default creds
+ruby - 8181 vuln cookie - ahrd because i have to marshall a ruby serialized payload
+mysql - m
+samba - Working
+Chat - Working
+
 ## Ports
 
 * HTTP(S)

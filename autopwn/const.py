@@ -8,6 +8,11 @@ class ssh:
     password = 'btv'
 
 
+class service:
+    user = "droid"
+    password = "talos_is_known_to_rox"
+
+
 # Metasploitable Default Credentials
 creds = {
     "vagrant": "vagrant",
@@ -36,6 +41,10 @@ MSFPASS = "T4L05PWN5U"
 MSFSERVER = "127.0.0.1"
 MSFPORT = 55553
 MSFSSL = True
+
+MSFLHOST = "0.0.0.0"
+
+# Random
 
 SERVICES = [
     "axis",
