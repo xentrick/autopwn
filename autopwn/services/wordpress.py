@@ -11,9 +11,7 @@ log.setLevel(logging.DEBUG)
 class WordPress(Service):
     def __init__(self, autopwn):
 
-        super(WordPress, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(WordPress, self).__init__(autopwn)
 
         self.name = "WordPress"
         self.protocols = ["HTTP"]

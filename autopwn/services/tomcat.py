@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class Tomcat(Service):
     def __init__(self, autopwn):
 
-        super(Tomcat, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(Tomcat, self).__init__(autopwn)
 
         self.name = "Apache Tomcat 8"
         self.protocols = ["HTTP"]

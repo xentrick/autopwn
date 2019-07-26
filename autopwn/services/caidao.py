@@ -11,9 +11,7 @@ log = logging.getLogger(__name__)
 class Caidao(Service):
     def __init__(self, autopwn):
 
-        super(Caidao, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(Caidao, self).__init__(autopwn)
 
         self.name = "Chinese Caidao"
         self.protocols = ["HTTP"]

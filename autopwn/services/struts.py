@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class Struts(Service):
     def __init__(self, autopwn):
 
-        super(Struts, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(Struts, self).__init__(autopwn)
 
         self.name = "Apache Struts"
         self.protocols = ["HTTP"]

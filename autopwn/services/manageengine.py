@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class ManageEngine(Service):
     def __init__(self, autopwn):
 
-        super(ManageEngine, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(ManageEngine, self).__init__(autopwn)
 
         self.name = "ManageEngine"
         self.protocols = ["HTTP"]

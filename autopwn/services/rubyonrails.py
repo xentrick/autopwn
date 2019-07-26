@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class RubyonRails(Service):
     def __init__(self, autopwn):
 
-        super(RubyonRails, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(RubyonRails, self).__init__(autopwn)
 
         self.name = "Ruby on Rails"
         self.protocols = ["HTTP"]

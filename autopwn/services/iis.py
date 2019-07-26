@@ -11,9 +11,7 @@ log = logging.getLogger(__name__)
 class IIS(Service):
     def __init__(self, autopwn):
 
-        super(IIS, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(IIS, self).__init__(autopwn)
 
         self.name = "IIS HTTP/FTP"
         self.protocols = ["FTP", "HTTP"]

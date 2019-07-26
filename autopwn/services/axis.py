@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class Axis(Service):
     def __init__(self, autopwn):
 
-        super(Axis, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(Axis, self).__init__(autopwn)
 
         self.name = "Apache Axis2"
         self.protocols = ["HTTP"]

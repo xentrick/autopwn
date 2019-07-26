@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class Elastic(Service):
     def __init__(self, autopwn):
 
-        super(Elastic, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(Elastic, self).__init__(autopwn)
 
         self.name = "Elastic Search"
         self.protocols = ["HTTP"]
@@ -20,4 +18,3 @@ class Elastic(Service):
         self.exploits = ["exploit/multi/elasticsearch/script_mvel_rce"]
         self.creds = {}
         self.cves = ["CVE-2014-3120"]
-        super().__init__()

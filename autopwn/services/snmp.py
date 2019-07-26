@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class SNMP(Service):
     def __init__(self, autopwn):
 
-        super(SNMP, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(SNMP, self).__init__(autopwn)
 
         self.name = "SNMP"
         self.protocols = ["UDP"]

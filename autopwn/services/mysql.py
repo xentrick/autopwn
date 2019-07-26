@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class MySQL(Service):
     def __init__(self, autopwn):
 
-        super(MySQL, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(MySQL, self).__init__(autopwn)
 
         self.name = "MySQL"
         self.protocols = ["TCP"]

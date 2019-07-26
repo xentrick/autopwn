@@ -11,9 +11,7 @@ log = logging.getLogger(__name__)
 class WinRM(Service):
     def __init__(self, autopwn):
 
-        super(WinRM, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(WinRM, self).__init__(autopwn)
 
         self.name = "Windows Remote Management service"
         self.protocols = ["HTTPS"]

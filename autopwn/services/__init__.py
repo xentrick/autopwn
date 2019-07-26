@@ -7,6 +7,8 @@ from .base import Service
 # Ubuntu Metasploitable
 
 from .unreal import Unreal
+from .proftpd import ProFTPD
+from .drupal import Drupal
 
 # Windows Metasploitable
 from .axis import Axis

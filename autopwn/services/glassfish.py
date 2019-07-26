@@ -10,9 +10,7 @@ log = logging.getLogger(__name__)
 class GlassFish(Service):
     def __init__(self, autopwn):
 
-        super(GlassFish, self).__init__()
-        self._autopwn = autopwn
-        self._msfrpcd = self._autopwn._msfrpcd
+        super(GlassFish, self).__init__(autopwn)
 
         self.name = "GlassFish"
         self.protocols = ["HTTP", "HTTPS"]
