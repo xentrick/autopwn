@@ -1,26 +1,17 @@
 #!/usr/bin/env python3
 
-from ..const import (
-    MSFUSER,
-    MSFPASS,
-    MSFSERVER,
-    MSFPORT,
-    MSFSSL
-)
+from ..const import MSFUSER, MSFPASS, MSFSERVER, MSFPORT, MSFSSL
 
 from pymetasploit3.msfrpc import MsfRpcClient
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
 def msfconnect():
     return MsfRpcClient(
-        MSFPASS,
-        username=MSFUSER,
-        ssl=MSFSSL,
-        server=MSFSERVER,
-        port=MSFPORT
+        MSFPASS, username=MSFUSER, ssl=MSFSSL, server=MSFSERVER, port=MSFPORT
     )
 
 

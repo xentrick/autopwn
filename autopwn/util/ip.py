@@ -1,8 +1,7 @@
-
-
 import socket
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
@@ -15,7 +14,7 @@ def checkIP(addr):
         if not valid_ipv6(addr):
             log.info("Invalid address.")
             return False
-    log.debug("Valid host address!")
+    # log.debug("Valid host address!")
 
 
 def valid_ipv4(addr):

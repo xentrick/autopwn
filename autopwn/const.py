@@ -4,11 +4,11 @@ __version__ = 0.1
 
 
 class ssh:
-    user = 'btv'
-    password = 'btv'
+    user = "btv"
+    password = "btv"
 
 
-class service:
+class pwnAccount:
     user = "droid"
     password = "talos_is_known_to_rox"
 
@@ -68,5 +68,5 @@ SERVICES = [
     "nreal",
     "webdav",
     "inrm",
-    "wordpress"
+    "wordpress",
 ]

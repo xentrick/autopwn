@@ -6,6 +6,7 @@ from smb.base import SMBTimeout, NotReadyError, NotConnectedError
 from smb.smb_structs import UnsupportedFeature, ProtocolError, OperationFailure
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
@@ -20,7 +21,7 @@ class Samba:
         self.__system = "*SMBSERVER"
 
     def __exploit(self):
-        log.debug("[!] Attempting login to SMB")
+        log.debug(f"[!] Attempting login to SMB ({self.__host})")
         self.__smb = SMBConnection(
             self.__user,
             self.__pass,
@@ -29,11 +30,12 @@ class Samba:
             self.__domain,
             use_ntlm_v2=True,
             sign_options=SMBConnection.SIGN_WHEN_SUPPORTED,
-            is_direct_tcp=True)
+            is_direct_tcp=True,
+        )
         if self.__smb.connect(self.__host, self.__port):
-            log.info("[!] SMB is vulnerable")
+            log.info(f"[!] SMB is vulnerable ({self.__host})")
             return True
-        log.info("[!] SMB is secure")
+        log.info(f"[!] SMB is secure ({self.__host})")
         return False
 
     def servicebot(self):
@@ -45,7 +47,8 @@ class Samba:
             self.__domain,
             use_ntlm_v2=True,
             sign_options=SMBConnection.SIGN_WHEN_SUPPORTED,
-            is_direct_tcp=True)
+            is_direct_tcp=True,
+        )
         if self.__smb.connect(self.__host, self.__port):
             return True
         return False

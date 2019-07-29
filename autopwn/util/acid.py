@@ -8,6 +8,7 @@ from autopwn import exceptions
 
 log = logging.getLogger("autopwn")
 
+
 def check_services(host):
     """
     Checks if target host is properly configured for SSH
@@ -20,11 +21,15 @@ def check_services(host):
     try:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(host, username=const.ssh.user, password=const.ssh.password)
-        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('service --status-all')
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(
+            "service --status-all", timeout=20
+        )
         print(ssh_stdout.readlines())
         print(ssh_stdout.readlines())
     except Exception as e:
-        raise exceptions.AcidSSHConfigurationException(f"Acid SSH test failed for {host}: {e}")
+        raise exceptions.AcidSSHConfigurationException(
+            f"Acid SSH test failed for {host}: {e}"
+        )
 
     finally:
         try:
@@ -48,7 +53,9 @@ def check_port(host, ports):
             log.info(f"Checking TCP port {p} is up")
             s.connect((host, p))
         except Exception as e:
-            raise exceptions.AcidTestException(f"Acid port test for {host}: unable to connect to port {p}: {e}" )
+            raise exceptions.AcidTestException(
+                f"Acid port test for {host}: unable to connect to port {p}: {e}"
+            )
 
         finally:
             try:
@@ -57,6 +64,7 @@ def check_port(host, ports):
                 pass
 
     log.info("Port acid test succeeded")
+
 
 def ssh_test(host):
     """

