@@ -34,8 +34,8 @@ class Samba:
         )
         try:
             if self.__smb.connect(self.__host, self.__port):
-                print(self.__smb.echo("PWNEDBYTALOS"))
-                print(self.__smb.listShares())
+                self.__smb.echo("PWNEDBYTALOS")
+                self.__smb.listShares()
                 log.info(f"[!] SMB is vulnerable ({self.__host})")
                 return True
             else:
@@ -45,7 +45,7 @@ class Samba:
             log.info(f"[!] SMB Connection refused. Get your server up you nut sack ({self.__host})")
             return True
         except OperationFailure as e:
-            log.info(f"[!] SMB is secure! ({self.__host})")
+            log.info(f"[!] Operation failure. SMB is secure! ({self.__host})")
             return False
 
     def servicebot(self):
