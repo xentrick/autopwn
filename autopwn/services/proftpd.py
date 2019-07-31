@@ -21,19 +21,23 @@ class ProFTPD:
         log.debug(f"[!] Connecting to ProFTPD ({self.__host})")
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Set a timeout
-        self.__sock.settimeout(20)
+        self.__sock.settimeout(30)
         try:
             self.__sock.connect((self.__host, self.__port))
             log.debug(
                 f"[!] Connection to ProFTPD established, removing timeout ({self.__host})"
             )
-            self.__sock.settimeout(None)
-            log.debug(f"[!] Receiving Banner ({self.__host})")
+            #self.__sock.settimeout(None)
+            log.debug(f"[!] Getting Banner ({self.__host})")
             banner = str(self.__sock.recv(1024), "utf-8")
+            if "220 ProFTPD" not in banner:
+                log.info(f"[!] Unexpected banner ({self.__host})")
+                return False
             log.debug(f"[!] Banner received: {banner} ({self.__host})")
-        except socket.error as e:
-            log.info(f"[!] Error: {e} ({self.__host})")
             return True
+        except socket.error as e:
+            log.debug(f"[!] Error: {e} ({self.__host})")
+            return False
 
     def __exploit(self):
         log.debug(f"[!] In exploit for ProFTPD ({self.__host})")
@@ -61,7 +65,6 @@ class ProFTPD:
             log.info(f"[+] PHPMyAdmin is vulnerable ({self.__host})")
             return True
         else:
-            log.info(f"[+] ProFTPD is secure ({self.__host})")
             return False
 
     def __trigger(self):

@@ -19,7 +19,6 @@ class Scoring(object):
         self.config = configparser.ConfigParser()
         self.config._interpolation = configparser.ExtendedInterpolation()
         self.config.read(self.__ini)
-        pprint(self.config)
         for i in self.config.sections():
             log.debug(f"Section: {i}")
             # for k, v in self.config.get(i):
@@ -53,6 +52,9 @@ class Scoring(object):
         self._port = self.config.get("Scoreboard", "port")
         self._user = self.config.get("Scoreboard", "user")
         self._password = self.config.get("Scoreboard", "password")
+        log.debug(f"Scoreboard: http://{self._addr}:{self._port}")
+        log.debug(f"Username: {self._user}")
+        log.debug(f"Password: {self._password}")
         self._parseSections()
 
     def _parseSections(self):
@@ -62,15 +64,25 @@ class Scoring(object):
         log.debug(f"Challenges: {self.challenges}")
 
     def award(self, team, chall):
-        log.info("[+] Awarding {team} for {chall}")
-        teamId = None
-        player = None
-        for i in self.ctfd.teams.update():
-            log.debug(f"Team: {i.name}")
-            if i.name.lower() == team.lower():
-                teamId = i.id
-                log.debug(f"TeamID: {teamId}")
-        return
+        log.info(f"[+] Awarding {team} for {chall}")
+        teamId = 1 # Temp value that doesn't seem to matter
+        playerId = None # Important value
+        result = False
+        if not self.challenges[chall]:
+            return False
+        challId = self.challenges[chall][1][1]
+        log.debug(f"[!] Challenge: {chall} ID: {challId}")
+        self.ctfd.players.update()
+        for p in self.ctfd.players:
+            if p.name.lower() == team.lower():
+                playerId = p.id
+                log.debug(f"[-] TeamID: {teamId}")
+                result = self.ctfd.submissions.give(playerId, teamId, challId)
+                if result:
+                    log.info(f"[!] Awarded {team} points for {chall}")
+                else:
+                    log.info(f"[!] Failure to award points to {team} for {chall}")
+
 
     def ConfigSectionMap(self, section):
         dict1 = {}

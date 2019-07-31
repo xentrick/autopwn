@@ -13,6 +13,7 @@ paralog = logging.getLogger("paramiko").setLevel(logging.WARNING)
 smblog = logging.getLogger("SMB").setLevel(logging.WARNING)
 paralog = logging.getLogger("requests").setLevel(logging.WARNING)
 paralog = logging.getLogger("urllib3").setLevel(logging.WARNING)
+#ctfdlog = logging.getLogger("ctfdclient").setLevel(logging.DEBUG)
 
 
 def verifyCIDR(block):
@@ -28,7 +29,9 @@ def listIPs(block):
 def main(args):
     if args.debug:
         log.setLevel(logging.DEBUG)
-    pwn = Autopwn()
+        pwn = Autopwn(debug=True)
+    else:
+        pwn = Autopwn()
     if args.host:
         pwn.checkAll([verifyAddr(args.host)])
     else:

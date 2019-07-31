@@ -72,6 +72,7 @@ class Chat:
             cookies=self.__requests.cookies,
         )
         if r.status_code != 200:
+            log.info(f"[!] Unable to connect to Chat App ({self.__host})")
             return True
         sleep(5)
         return self.__check()

@@ -32,11 +32,21 @@ class Samba:
             sign_options=SMBConnection.SIGN_WHEN_SUPPORTED,
             is_direct_tcp=True,
         )
-        if self.__smb.connect(self.__host, self.__port):
-            log.info(f"[!] SMB is vulnerable ({self.__host})")
+        try:
+            if self.__smb.connect(self.__host, self.__port):
+                print(self.__smb.echo("PWNEDBYTALOS"))
+                print(self.__smb.listShares())
+                log.info(f"[!] SMB is vulnerable ({self.__host})")
+                return True
+            else:
+                log.info(f"[!] SMB is secure ({self.__host})")
+                return False
+        except ConnectionRefusedError as e:
+            log.info(f"[!] SMB Connection refused. Get your server up you nut sack ({self.__host})")
             return True
-        log.info(f"[!] SMB is secure ({self.__host})")
-        return False
+        except OperationFailure as e:
+            log.info(f"[!] SMB is secure! ({self.__host})")
+            return False
 
     def servicebot(self):
         self.__smb = SMBConnection(
