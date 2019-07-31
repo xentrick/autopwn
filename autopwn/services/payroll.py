@@ -30,7 +30,7 @@ class Payroll:
 
     def run(self, host, port=None):
         self.__host = host
-        log.info(f"[*] Exploiting Payroll App ({self.__host})")
+        log.debug(f"[*] Exploiting Payroll App ({self.__host})")
         if port:
             self.__port = port
         return self.__exploit()

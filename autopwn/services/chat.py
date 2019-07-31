@@ -78,7 +78,7 @@ class Chat:
 
     def run(self, host, port=None):
         self.__host = host
-        log.info(f"[+] Exploiting Metasploitable3 Chat App ({self.__host})")
+        log.debug(f"[+] Exploiting Metasploitable3 Chat App ({self.__host})")
         if port:
             self.__port = port
         if not self.__cookie():

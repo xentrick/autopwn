@@ -1,14 +1,34 @@
-from setuptools import setup
+#!/usr/bin/env python
+# coding: utf-8
+
+import re
+from os import path
+from setuptools import find_packages, setup
+
+PACKAGE_NAME = "autopwn"
+
+HERE = path.abspath(path.dirname(__file__))
+with open(path.join(HERE, PACKAGE_NAME, "const.py"), encoding="utf-8") as fp:
+    VERSION = re.search('__version__ = "([^"]+)"', fp.read()).group(1)
+
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
 
 setup(
-    name="autopwn",
-    version="0.1",
+    name=PACKAGE_NAME,
+    version=VERSION,
+    description="Autopwn bot for monitoring vulnerable hosts (CTF)",
     url="https://github.com/xentrick/autopwn",
     license="",
-    author="nmavis",
-    author_email="nmavis@cisco.com",
-    description="Python CLI tools for checking vulnerable services in MS3",
-    packages=["autopwn", "autopwn.bin", "autopwn.services", "autopwn.util"],
-    entry_points={"console_scripts": ["autopwn = autopwn.bin.cli:main"]},
-    install_requires=["python-magic", "pymetasploit3"],
+    author='Nick Mavis',
+    author_email='nmavis@cisco.com',
+    packages=find_packages(exclude={"tests", "tests.*"}),
+    install_requires=requirements,
+    entry_points={
+        "console_scripts": ['autopwn = bin/btv']
+        },
+    classifiers=[
+        'Environment :: Console',
+        'Programming Language :: Python :: 3.7',
+    ]
 )

@@ -18,6 +18,8 @@ paralog = logging.getLogger("urllib3").setLevel(logging.WARNING)
 def verifyCIDR(block):
     return ipaddress.ip_network(block)
 
+def verifyAddr(IP):
+    return str(ipaddress.ip_address(IP))
 
 def listIPs(block):
     return [str(ip) for ip in block.hosts()]
@@ -26,15 +28,18 @@ def listIPs(block):
 def main(args):
     if args.debug:
         log.setLevel(logging.DEBUG)
-    block = verifyCIDR(args.cidr)
     pwn = Autopwn()
-    pwn.checkAll(listIPs(block))
-    # pwn.checkAll(['192.168.56.4'])
+    if args.host:
+        pwn.checkAll([verifyAddr(args.host)])
+    else:
+        block = verifyCIDR(args.cidr)
+        pwn.checkAll(listIPs(block))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("cidr")
+    parser.add_argument("--host", action="store", dest="host", required=False)
     parser.add_argument(
         "-d", "--debug", action="store_true", dest="debug", required=False
     )

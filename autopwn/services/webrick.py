@@ -35,7 +35,7 @@ class Webrick:
 
     def run(self, host, port=None):
         self.__host = host
-        log.info(f"[+] Exploiting Webrick ({self.__host})")
+        log.debug(f"[+] Exploiting Webrick ({self.__host})")
         if port:
             self.__port = port
         return self.__exploit()

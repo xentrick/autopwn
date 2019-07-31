@@ -55,7 +55,7 @@ class Samba:
 
     def run(self, host, user=None, pwd=None):
         self.__host = host
-        log.info(f"[+] Exploiting SMB ({self.__host})")
+        log.debug(f"[+] Exploiting SMB ({self.__host})")
         if user:
             self.__user = user
         if pwd:

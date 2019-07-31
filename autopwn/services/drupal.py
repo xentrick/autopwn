@@ -143,7 +143,7 @@ class Drupal:
                 headers={"Content-Type": "application/x-www-form-urlencoded"},
             )
             if "mb_strlen() expects parameter 1" in r.text:
-                log.info(f"[!] Drupal is vulnerable! ({self.__host})")
+                log.info(f"[!] Drupal is vulnerable ({self.__host})")
                 return True
             else:
                 log.info(f"[X] Exploit failed for some reason ({self.__host})")
@@ -161,7 +161,7 @@ class Drupal:
 
     def run(self, host, port=None, username=None, pwd=None):
         self.__host = host
-        log.info(f"[*] Exploiting Drupal ({self.__host})")
+        log.debug(f"[*] Exploiting Drupal ({self.__host})")
         if port:
             self.__port = port
         if username:

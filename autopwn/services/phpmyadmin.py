@@ -46,7 +46,7 @@ class PHPMyAdmin:
 
     def run(self, host, port=None):
         self.__host = host
-        log.info(f"[*] Exploiting PHPMyAdmin ({self.__host})")
+        log.debug(f"[*] Exploiting PHPMyAdmin ({self.__host})")
         if port:
             self.__port = port
         self.__csrf()

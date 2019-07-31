@@ -72,7 +72,7 @@ class ProFTPD:
 
     def run(self, host, port=None):
         self.__host = host
-        log.info(f"[+] Exploiting ProFTPD ({self.__host})")
+        log.debug(f"[+] Exploiting ProFTPD ({self.__host})")
         if port:
             self.__port = port
         if not self.__connect():

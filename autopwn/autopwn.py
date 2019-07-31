@@ -6,13 +6,16 @@ from . import services
 from . import util
 
 import logging
+
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
 
 class Autopwn(object):
     def __init__(self, numThreads=8):
-        log.info("Starting Autopwn!")
+        log.info("[-] Starting Autopwn!")
+
+        self.__ctf = util.ctfd.Scoring()
 
         self.chat = services.Chat()
         self.drupal = services.Drupal()
@@ -26,13 +29,13 @@ class Autopwn(object):
         self.__threads = ThreadPool(numThreads)
 
     def scoreHost(self, host):
-        log.debug(f"Verifying host: {host}")
+        log.debug(f"[-] Verifying host: {host}")
         util.ip.checkIP(host)
-        if not self.ssh.service(host):
-            log.debug(f"Host not eligible {host}")
+        __teamid = util.team.eligible(host)
+        if not __teamid:
             return
 
-        log.info(f"Scoring {host}")
+        log.info(f"[+] Scoring {__teamid} ({host})")
         self.chat.run(host)
         self.drupal.run(host)
         self.payroll.run(host)
@@ -40,12 +43,6 @@ class Autopwn(object):
         self.proftpd.run(host)
         self.samba.run(host)
         self.webrick.run(host)
-
-    def scan(self, IP):
-        """ Threaded scan function to see what hosts are up and eligible """
-        return self.ssh.service(IP)
-        # tmpSSH = services.SSH()
-        # tmpSSH.service(IP)
 
     def checkAll(self, ipList):
         log.info("[-] Powering up the lasers. Preparing for world domination!")
