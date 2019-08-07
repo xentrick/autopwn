@@ -15,13 +15,15 @@ class Payroll:
         self.__path = "/payroll_app.php"
 
     def __check(self):
-        exists = 'Payroll Login'
+        exists = "Payroll Login"
         r = requests.get(f"http://{self.__host}:{self.__port}{self.__path}")
         if r.status_code != 200:
             log.info(f"[!] Invalid status code received ({self.__host})")
             return False
         if exists not in r.text:
-            log.info(f"[!] Unexpected data returned. Thought they were slick. ({self.__host})")
+            log.info(
+                f"[!] Unexpected data returned. Thought they were slick. ({self.__host})"
+            )
             return False
         return True
 

@@ -49,7 +49,10 @@ class Webrick:
         if "Linux Metasploitable3" in r.text:
             log.info(f"[!] Webrick is secure ({self.__host})")
             return False
-        if "To learn more about each version, please click one of the images below" in r.text:
+        if (
+            "To learn more about each version, please click one of the images below"
+            in r.text
+        ):
             log.info(f"[!] Webrick is secure ({self.__host})")
             return False
         log.info(f"[!] Bad data from on base page ({self.__host})")

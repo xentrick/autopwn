@@ -65,8 +65,8 @@ class Scoring(object):
 
     def award(self, team, chall):
         log.info(f"[+] Awarding {team} for {chall}")
-        teamId = 1 # Temp value that doesn't seem to matter
-        playerId = None # Important value
+        teamId = 1  # Temp value that doesn't seem to matter
+        playerId = None  # Important value
         result = False
         if not self.challenges[chall]:
             return False
@@ -82,7 +82,6 @@ class Scoring(object):
                     log.info(f"[!] Awarded {team} points for {chall}")
                 else:
                     log.info(f"[!] Failure to award points to {team} for {chall}")
-
 
     def ConfigSectionMap(self, section):
         dict1 = {}

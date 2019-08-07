@@ -34,15 +34,16 @@ def main(args):
         pwn = Autopwn()
     if args.host:
         pwn.checkAll([verifyAddr(args.host)])
-    else:
+    if args.cidr:
         block = verifyCIDR(args.cidr)
         pwn.checkAll(listIPs(block))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("cidr")
-    parser.add_argument("--host", action="store", dest="host", required=False)
+    needed = parser.add_mutually_exclusive_group(required=True)
+    needed.add_argument("--cidr", action="store", dest="cidr")
+    needed.add_argument("--host", action="store", dest="host")
     parser.add_argument(
         "-d", "--debug", action="store_true", dest="debug", required=False
     )

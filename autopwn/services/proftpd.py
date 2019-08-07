@@ -27,7 +27,7 @@ class ProFTPD:
             log.debug(
                 f"[!] Connection to ProFTPD established, removing timeout ({self.__host})"
             )
-            #self.__sock.settimeout(None)
+            # self.__sock.settimeout(None)
             log.debug(f"[!] Getting Banner ({self.__host})")
             banner = str(self.__sock.recv(1024), "utf-8")
             if "220 ProFTPD" not in banner:

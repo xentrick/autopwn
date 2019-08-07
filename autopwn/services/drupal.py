@@ -159,7 +159,10 @@ class Drupal:
             if "mb_strlen() expects parameter 1" in r.text:
                 log.info(f"[!] Drupal is vulnerable ({self.__host})")
                 return True
-            if "The website encountered an unexpected error. Please try again later." in r.text:
+            if (
+                "The website encountered an unexpected error. Please try again later."
+                in r.text
+            ):
                 log.info(f"[!] Drupal is down... lol ({self.__host})")
                 return True
             else:
