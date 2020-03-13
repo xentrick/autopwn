@@ -1,20 +1,10 @@
 # autopwn
 
-# msrpcd
+This was used to run a reverse CTF in the Defcon 27 Blue Team Village. 
 
-Start up:
+It attacked known vulnerable services in metasploitable VMs and reported if the target was vulnerable or patched. It also reached out to CTFd to give the teams points if services were secure.
 
-`./init/init_msfrpcd.sh`  
-
-Credentials:  
-
-User: `talosvillage`  
-Password: `T4L05PWN5U`
-
-## Service Account
-
-User: `droid`  
-Password: `talos_is_known_to_rox`  
+Cool idea. Maybe someone will have a use for this
 
 ## Nmap Ubuntu
 
